@@ -1,9 +1,33 @@
 package com.binance.api.client;
 
-import com.binance.api.client.domain.account.*;
-import com.binance.api.client.domain.account.request.*;
-import com.binance.api.client.domain.general.ExchangeInfo;
+import java.util.List;
+
+import com.binance.api.client.domain.account.Account;
+import com.binance.api.client.domain.account.DepositAddress;
+import com.binance.api.client.domain.account.DepositHistory;
+import com.binance.api.client.domain.account.DustTransferResponse;
+import com.binance.api.client.domain.account.NewOCO;
+import com.binance.api.client.domain.account.NewOCOResponse;
+import com.binance.api.client.domain.account.NewOrder;
+import com.binance.api.client.domain.account.NewOrderResponse;
+import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.OrderList;
+import com.binance.api.client.domain.account.SubAccountTransfer;
+import com.binance.api.client.domain.account.Trade;
+import com.binance.api.client.domain.account.TradeHistoryItem;
+import com.binance.api.client.domain.account.WithdrawHistory;
+import com.binance.api.client.domain.account.WithdrawResult;
+import com.binance.api.client.domain.account.request.AllOrderListRequest;
+import com.binance.api.client.domain.account.request.AllOrdersRequest;
+import com.binance.api.client.domain.account.request.CancelOrderListRequest;
+import com.binance.api.client.domain.account.request.CancelOrderListResponse;
+import com.binance.api.client.domain.account.request.CancelOrderRequest;
+import com.binance.api.client.domain.account.request.CancelOrderResponse;
+import com.binance.api.client.domain.account.request.OrderListStatusRequest;
+import com.binance.api.client.domain.account.request.OrderRequest;
+import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.general.Asset;
+import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.market.AggTrade;
 import com.binance.api.client.domain.market.BookTicker;
 import com.binance.api.client.domain.market.Candlestick;
@@ -11,8 +35,6 @@ import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.OrderBook;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
-
-import java.util.List;
 
 /**
  * Binance API facade, supporting synchronous/blocking access Binance's REST API.
@@ -173,6 +195,8 @@ public interface BinanceApiRestClient {
    */
   CancelOrderResponse cancelOrder(CancelOrderRequest cancelOrderRequest);
 
+	CancelOrderResponse cancelAllOpenOrders(OrderRequest order);
+
   /**
    * Get all open orders on a symbol.
    *
@@ -239,7 +263,8 @@ public interface BinanceApiRestClient {
    * @param fromId TradeId to fetch from. Default gets most recent trades.
    * @return a list of trades
    */
-  List<Trade> getMyTrades(String symbol, Integer limit, Long fromId, Long recvWindow, Long timestamp);
+	List<Trade> getMyTrades(String symbol, Long orderId, Long startTime, Long endTime, Integer limit, Long fromId,
+			Long recvWindow, Long timestamp);
 
   /**
    * Get trades for a specific account and symbol.
@@ -329,4 +354,5 @@ public interface BinanceApiRestClient {
    * @param listenKey listen key that identifies a data stream
    */
   void closeUserDataStream(String listenKey);
+
 }

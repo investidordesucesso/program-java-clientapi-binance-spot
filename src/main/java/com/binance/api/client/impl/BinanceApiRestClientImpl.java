@@ -186,6 +186,12 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	}
 
 	@Override
+	public CancelOrderResponse cancelAllOpenOrders(OrderRequest order) {
+		return executeSync(
+				binanceApiService.cancelAllOpenOrders(order.getSymbol(), order.getRecvWindow(), order.getTimestamp()));
+	}
+
+	@Override
 	public List<Order> getOpenOrders(OrderRequest orderRequest) {
 		return executeSync(binanceApiService.getOpenOrders(orderRequest.getSymbol(), orderRequest.getRecvWindow(),
 				orderRequest.getTimestamp()));
@@ -236,25 +242,27 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	}
 
 	@Override
-	public List<Trade> getMyTrades(String symbol, Integer limit, Long fromId, Long recvWindow, Long timestamp) {
-		return executeSync(binanceApiService.getMyTrades(symbol, limit, fromId, recvWindow, timestamp));
+	public List<Trade> getMyTrades(String symbol, Long orderId, Long startTime, Long endTime, Integer limit, Long fromId, Long recvWindow,
+			Long timestamp) {
+		return executeSync(binanceApiService.getMyTrades(symbol, orderId, startTime, endTime, limit, fromId, recvWindow,
+				timestamp));
 	}
 
 	@Override
 	public List<Trade> getMyTrades(String symbol, Integer limit) {
-		return getMyTrades(symbol, limit, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+		return getMyTrades(symbol, null, null, null, limit, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
 				System.currentTimeMillis());
 	}
 
 	@Override
 	public List<Trade> getMyTrades(String symbol) {
-		return getMyTrades(symbol, null, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+		return getMyTrades(symbol, null, null, null, null, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
 				System.currentTimeMillis());
 	}
 
 	@Override
 	public List<Trade> getMyTrades(String symbol, Long fromId) {
-		return getMyTrades(symbol, null, fromId, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+		return getMyTrades(symbol, null, null, null, null, fromId, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
 				System.currentTimeMillis());
 	}
 
@@ -308,4 +316,5 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	public void closeUserDataStream(String listenKey) {
 		executeSync(binanceApiService.closeAliveUserDataStream(listenKey));
 	}
+
 }

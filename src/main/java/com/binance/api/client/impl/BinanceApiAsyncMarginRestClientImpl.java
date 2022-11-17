@@ -1,19 +1,24 @@
 package com.binance.api.client.impl;
 
+import static com.binance.api.client.impl.BinanceApiServiceGenerator.createService;
+
+import java.util.List;
+
 import com.binance.api.client.BinanceApiAsyncMarginRestClient;
 import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.TransferType;
-import com.binance.api.client.domain.account.*;
+import com.binance.api.client.domain.account.MarginAccount;
+import com.binance.api.client.domain.account.MarginNewOrder;
+import com.binance.api.client.domain.account.MarginNewOrderResponse;
+import com.binance.api.client.domain.account.MarginTransaction;
+import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.account.Trade;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.account.request.CancelOrderResponse;
 import com.binance.api.client.domain.account.request.OrderRequest;
 import com.binance.api.client.domain.account.request.OrderStatusRequest;
 import com.binance.api.client.domain.event.ListenKey;
-
-import java.util.List;
-
-import static com.binance.api.client.impl.BinanceApiServiceGenerator.createService;
 
 /**
  * Implementation of Binance's Margin REST API using Retrofit with asynchronous/non-blocking method calls.
@@ -68,7 +73,9 @@ public class BinanceApiAsyncMarginRestClientImpl implements BinanceApiAsyncMargi
 
     @Override
     public void getMyTrades(String symbol, BinanceApiCallback<List<Trade>> callback) {
-        binanceApiService.getMyTrades(symbol, null, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()).enqueue(new BinanceApiCallbackAdapter<>(callback));
+		binanceApiService
+				.getMyTrades(symbol, null, null, null, null, null, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+				System.currentTimeMillis()).enqueue(new BinanceApiCallbackAdapter<>(callback));
     }
 
     // user stream endpoints
