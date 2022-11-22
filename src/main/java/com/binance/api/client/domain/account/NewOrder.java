@@ -1,11 +1,12 @@
 package com.binance.api.client.domain.account;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.TimeInForce;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * A trade order to enter or exit a position.
@@ -266,6 +267,37 @@ public class NewOrder {
   public static NewOrder limitSell(String symbol, TimeInForce timeInForce, String quantity, String price) {
     return new NewOrder(symbol, OrderSide.SELL, OrderType.LIMIT, timeInForce, quantity, price);
   }
+
+	/**
+	 * Places a STOP buy order for the given <code>quantity</code> and
+	 * <code>price</code>.
+	 *
+	 * @return a new order which is pre-configured with STOP as the order type and
+	 *         BUY as the order side.
+	 */
+	public static NewOrder stopBuy(String symbol, String quantity, String stopPrice, String stopLimitPrice,
+			TimeInForce timeInForce) {
+		NewOrder newOrder = new NewOrder(symbol, OrderSide.BUY, OrderType.STOP_LOSS_LIMIT, timeInForce, quantity, null);
+		newOrder.stopPrice = stopPrice;
+		newOrder.price = stopLimitPrice;
+		return newOrder;
+	}
+
+	/**
+	 * Places a STOP sell order for the given <code>quantity</code> and
+	 * <code>price</code>.
+	 *
+	 * @return a new order which is pre-configured with STOP as the order type and
+	 *         SELL as the order side.
+	 */
+	public static NewOrder stopSell(String symbol, String quantity, String stopPrice, String stopLimitPrice,
+			TimeInForce timeInForce) {
+		NewOrder newOrder = new NewOrder(symbol, OrderSide.SELL, OrderType.STOP_LOSS_LIMIT, timeInForce, quantity,
+				null);
+		newOrder.stopPrice = stopPrice;
+		newOrder.price = stopLimitPrice;
+		return newOrder;
+	}
 
   @Override
   public String toString() {

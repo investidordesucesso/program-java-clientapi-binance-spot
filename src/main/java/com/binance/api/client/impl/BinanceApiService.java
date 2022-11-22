@@ -150,7 +150,8 @@ public interface BinanceApiService {
 
 	@Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
 	@DELETE("/api/v3/openOrders")
-	Call<CancelOrderResponse> cancelAllOpenOrders(@Query("symbol") String symbol, @Query("recvWindow") Long recvWindow,
+	Call<List<CancelOrderResponse>> cancelAllOpenOrders(@Query("symbol") String symbol,
+			@Query("recvWindow") Long recvWindow,
 			@Query("timestamp") Long timestamp);
 
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
