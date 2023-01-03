@@ -71,11 +71,6 @@ public class Order {
   private String stopPrice;
 
   /**
-   * Used with stop orders.
-   */
-  private String stopLimitPrice;
-
-  /**
    * Used with iceberg orders.
    */
   private String icebergQty;
@@ -194,14 +189,6 @@ public class Order {
     this.stopPrice = stopPrice;
   }
 
-  public String getStopLimitPrice() {
-    return stopLimitPrice;
-  }
-
-  public void setStopLimitPrice(String stopLimitPrice) {
-    this.stopLimitPrice = stopLimitPrice;
-  }
-
   public String getIcebergQty() {
     return icebergQty;
   }
@@ -264,7 +251,6 @@ public class Order {
             .append("type", type)
             .append("side", side)
             .append("stopPrice", stopPrice)
-            .append("stopLimitPrice", stopLimitPrice)
             .append("icebergQty", icebergQty)
             .append("time", time)
             .append("cummulativeQuoteQty", cummulativeQuoteQty)
