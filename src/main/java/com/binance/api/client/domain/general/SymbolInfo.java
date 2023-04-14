@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Symbol information (base/quote).
@@ -148,10 +149,12 @@ public class SymbolInfo {
    * @return symbol filter information for the provided filter type.
    */
   public SymbolFilter getSymbolFilter(FilterType filterType) {
-    return filters.stream()
-        .filter(symbolFilter -> symbolFilter.getFilterType() == filterType)
-        .findFirst()
-        .get();
+	Optional<SymbolFilter> first = filters.stream().filter(symbolFilter -> symbolFilter.getFilterType() == filterType).findFirst();
+	if (first.isPresent()) {
+		return first.get();
+	} else {
+		return null;
+	}
   }
 
   @Override
