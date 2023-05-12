@@ -26,6 +26,11 @@ public class Order {
   private Long orderId;
 
   /**
+   * Order id.
+   */
+  private Long orderListId;
+
+  /**
    * Client order id.
    */
   private String clientOrderId;
@@ -242,6 +247,7 @@ public class Order {
     return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
             .append("symbol", symbol)
             .append("orderId", orderId)
+            .append("orderListId", orderId)
             .append("clientOrderId", clientOrderId)
             .append("price", price)
             .append("origQty", origQty)
@@ -259,4 +265,12 @@ public class Order {
             .append("origQuoteOrderQty", origQuoteOrderQty)
             .toString();
   }
+
+public Long getOrderListId() {
+	return orderListId;
+}
+
+public void setOrderListId(Long orderListId) {
+	this.orderListId = orderListId;
+}
 }
