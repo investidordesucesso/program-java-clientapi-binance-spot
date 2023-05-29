@@ -5,6 +5,7 @@ import java.util.List;
 import com.binance.api.client.domain.account.Account;
 import com.binance.api.client.domain.account.DepositAddress;
 import com.binance.api.client.domain.account.DepositHistory;
+import com.binance.api.client.domain.account.DustConvertableResponse;
 import com.binance.api.client.domain.account.DustTransferResponse;
 import com.binance.api.client.domain.account.NewOCO;
 import com.binance.api.client.domain.account.NewOCOResponse;
@@ -302,7 +303,16 @@ public interface BinanceApiRestClient {
    * Conver a list of assets to BNB
    * @param asset the list of assets to convert
    */
-  DustTransferResponse dustTranfer(List<String> asset);
+  DustTransferResponse dustTransfer(List<String> asset);
+  
+  /**
+   * Get Assets That Can Be Converted Into BNB.
+   * 
+   * @param recvWindow
+   * @param timestamp
+   * @return
+   */
+  DustConvertableResponse dustConvertable();
 
   /**
    * Fetch account deposit history.
